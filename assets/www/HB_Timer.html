@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>HB_Timer</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<style type="text/css">
+body {
+	margin: 0px; padding: 0px; overflow: hidden;
+	background-color: #3399ff;
+	font-family: 굴림, 돋움, Vernada;
+	font-size: 11px;
+	color: #000000;
+}
+
+#stageCont_dv {
+	width: 600px; height: 600px;
+	position: absolute; left: 20px; top: 270px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+/*
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #ff0000;*/
+}
+#testLog_dv {
+	/*width: 400px; height: 260px;*/
+	position: absolute; left: 10px; top: 10px;
+	/*overflow: scroll;*/
+	/*overflow: hidden;*/
+	/*background-color: #ff0000;*/
+	/*color: #ffffff;*/
+	/*display: none;*/
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="hbjs/HB_Utils.js"></script>
+<script type="text/javascript" src="hbjs/HB_Timer.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(
+	function() {
+		var t_ta = jQuery(
+			'<textarea id="test_ta" style="width: 600px; height: 240px; border: none; font-family: Verdana; font-size: 12px;"></textarea>');
+		t_ta.appendTo(jQuery('#testLog_dv')).val('');
+		window.d_lta = t_ta;
+
+		var t_timer = new HB_Timer(1000);
+		t_timer.onCallBack = function(eObj) {
+			//alert(t_timer.onCallBack);
+			//alert('eObj.type: ' + eObj.type);
+
+			switch (eObj.type) {
+				case HB_Timer.EVENT_TYPE_UPDATE: {
+					HB_Debug.log(window.d_lta,
+						'CurrentCount: ' + this.get_currentCount().toString() + '\n' +
+						'Running: ' + this.get_running().toString());
+
+					break;
+				}
+
+				case HB_Timer.EVENT_TYPE_UPDATE_END: {
+					HB_Debug.log(window.d_lta,
+						'Timer End\n' +
+						'Running: ' + this.get_running().toString());
+
+					break;
+				}
+			}
+		};
+		window.g_timer = t_timer;
+
+		jQuery('#bt_1').click(function(eObj) {
+			var t_delay = parseInt(jQuery('#tf_1').val());
+			var t_repeat = parseInt(jQuery('#tf_2').val());
+			alert('t_delay: ' + t_delay);
+			alert('t_repeat: ' + t_repeat);
+
+			g_timer.set_delay(t_delay);
+			g_timer.set_repeatCount(t_repeat);
+			g_timer.start();
+		});
+		jQuery('#bt_2').click(function(eObj) {
+			g_timer.stop();
+		});
+		jQuery('#bt_3').click(function(eObj) {
+			g_timer.reset();
+			HB_Debug.clear(window.d_lta);
+		});
+	}
+);
+</script>
+</head>
+
+<body>
+
+<div id="stageCont_dv">
+	Delay: <input type="text" id="tf_1" value="1000" style="width: 40px;"></input>
+	Repeat: <input type="text" id="tf_2" value="7" style="width: 20px;"></input>
+	<button id="bt_1" type="button">Timer_Start</button>
+	<button id="bt_2" type="button">Timer_Stop</button>
+	<button id="bt_3" type="button">Timer_Reset</button>
+</div>
+
+<div id="testLog_dv"></div>
+</body>
+
+</html>
+
+

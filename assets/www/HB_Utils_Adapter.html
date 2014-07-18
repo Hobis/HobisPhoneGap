@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>Test</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<style type="text/css">
+body {
+	margin: 0px; padding: 0px; overflow: hidden;
+	background-color: #ffffff;
+	font-family: 돋움;
+	font-size: 11px;
+	color: #000000;
+}
+
+#stageCont_dv {
+	width: 600px; height: 600px;
+	position: absolute; left: 20px; top: 20px;
+	overflow: hidden;
+	background-repeat: no-repeat;
+/*
+	border-right-style: solid;
+	border-right-width: 1px;
+	border-right-color: #ff0000;*/
+}
+#canvasCont_dv {
+	width: 200px; height: 480px;
+	position: absolute; left: 200px; top: 0px;
+	overflow: hidden;
+	/*background-color: #ff0000;*/
+}
+#testLog_dv {
+	width: 400px; height: 260px;
+	position: absolute; left: 10px; top: 610px;
+	overflow: scroll;
+	background-color: #ff0000;
+	color: #ffffff;
+	display: none;
+}
+</style>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="hbjs/HB_Utils.js"></script>
+<script type="text/javascript">
+var Main = function(owner) {
+	this.p_initOnce(owner);
+};
+Main.prototype = {
+	p_initOnce: function(owner) {
+		this._owner = owner;
+		this._name = 'MainClass';
+		this._id = 'main_1';
+
+		jQuery(this._owner).click(
+			HB_Adapter.wrap(this, this.p_click));
+	}
+
+	,
+	p_click: function(eObj) {
+		alert('this._name: ' + this._name);
+		this.p_printMsg();
+	}
+
+	,
+	p_printMsg: function() {
+		alert('p_printMsg');
+		alert('this._id: ' + this._id);
+	}
+};
+
+jQuery(document).ready(
+	function() {
+
+		var t_m = new Main(document);
+	}
+);
+</script>
+</head>
+
+<body>
+
+<div id="stageCont_dv" style="left: 100px;">
+	<div id="canvasCont_dv">
+	</div>
+</div>
+
+<div id="testLog_dv"></div>
+</body>
+
+</html>
+
+
